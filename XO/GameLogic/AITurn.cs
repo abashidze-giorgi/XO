@@ -23,30 +23,88 @@ namespace XO.GameLogic
 
         List<Array> AIWarningLines = new List<Array>();
 
-        UC_Board_Squad AISelectboard;
+        List< UC_Board_Squad> AISelectboardList = new List<UC_Board_Squad>();
+
+        int AILevel = 0;
 
         private void AI_Turn()
         {
             if (Boards[4]._isEmpty)
             {
                 Form1 form = new Form1();
-                AISelectboard = Boards[4];
+                AISelectboardList.Add(Boards[4]);
+                return;
+            }
+            else
+            {
+                CheckAIWarningLines();
             }
         }
 
         private void CheckAIWarningLines()
         {
+            if(AIWarningLines.Count > 0)
+            {
+                UC_Board_Squad board = new UC_Board_Squad();
+                int currentLineOccupiedBoard = 0;
+                foreach (var winnerArray in AIWarningLines)
+                {
+                    foreach (int boardIndex in winnerArray)
+                    {
+                        if (Boards[boardIndex-1]._ocupated == "AI")
+                        {
+                            currentLineOccupiedBoard++;
+                        }
+                        else if(Boards[boardIndex - 1]._ocupated != "player")
+                        {
+                            AISelectboardList.Add(Boards[boardIndex - 1]);
+                        }
+                    }
+                    if(currentLineOccupiedBoard > 2)
+                    {
+                        AISelectboardList.Clear();
+                        AISelectboardList.Add(board);
+                        return;
+                    }
+                }
+            }
+            CheckPlayerWarningLines();
 
         }
 
         private void CheckPlayerWarningLines()
         {
-
+            if (playerWarningLines.Count > 0)
+            {
+                UC_Board_Squad board = new UC_Board_Squad();
+                int occupiedBoards = 0;
+                foreach (var winnerArray in playerWarningLines)
+                {
+                    foreach (int boardIndex in winnerArray)
+                    {
+                        if (Boards[boardIndex - 1]._ocupated == "player")
+                        {
+                            occupiedBoards++;
+                        }
+                        else
+                        {
+                            AISelectboardList.Add(Boards[boardIndex - 1]);
+                        }
+                    }
+                    if (occupiedBoards > 2)
+                    {
+                        AISelectboardList.Clear();
+                        AISelectboardList.Add(board);
+                        return;
+                    }
+                }
+            }
         }
 
  
-        public UC_Board_Squad Ai_Turn(List<UC_Board_Squad> list)
+        public List<UC_Board_Squad> AI_Selected_Boards(List<UC_Board_Squad> list, int aiLevel)
         {
+            AILevel - aiLevel;
             Boards = list;
             SetWinnerLines();
             foreach (UC_Board_Squad uc in list)
@@ -56,7 +114,7 @@ namespace XO.GameLogic
             CheckWarningLines();
             AnalysResult();
             AI_Turn();
-            return AISelectboard;
+            return AISelectboardList;
         }
 
         private void SetWinnerLines()

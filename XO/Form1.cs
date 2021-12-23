@@ -43,7 +43,7 @@ namespace XO
         {
             if (!playerTurn)
             {
-                aiTurn.Ai_Turn(boards);
+                Do_AI_Turn();
             }
         }
 
@@ -53,6 +53,7 @@ namespace XO
             {
                 cmb_start.SelectedIndex = 0;
             }
+
             if(cmb_start.SelectedIndex == 0)
             {
                 playerTurn = true;
@@ -178,17 +179,19 @@ namespace XO
             symbolX = true;
             GetUserControls();
         }
-
         private void ChangeTurn()
         {
             playerTurn = !playerTurn;
         }
-
         private void Do_AI_Turn()
         {
             if (!playerTurn)
             {
-                Set_Text(aiTurn.Ai_Turn(boards));
+                List<UC_Board_Squad> list = aiTurn.AI_Selected_Boards(boards);
+                if (list.Count < 2)
+                {
+                    Set_Text(list[0]);
+                }
                 ChangeTurn();
             }
         }
