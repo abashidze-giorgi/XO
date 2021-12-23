@@ -40,10 +40,20 @@ namespace XO
         public Color _color
         {
             get { return Color; }
-            set { Color = value; this.BackColor = value; }
+            set { Color = value; this.BackColor = value; SetFontColor(); }
         }
 
-
+        private void SetFontColor()
+        {
+            if (_color == Color.Black)
+            {
+                lbl_text.ForeColor = Color.White;
+            }
+            else
+            {
+                lbl_text.ForeColor = Color.Black;
+            }
+        }
 
         private void UC_Board_Squad_Click(object sender, EventArgs e)
         {

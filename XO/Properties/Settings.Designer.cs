@@ -34,5 +34,17 @@ namespace XO.Properties {
                 this["_boardColor"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int _level {
+            get {
+                return ((int)(this["_level"]));
+            }
+            set {
+                this["_level"] = value;
+            }
+        }
     }
 }

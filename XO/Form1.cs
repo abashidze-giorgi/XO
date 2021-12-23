@@ -13,9 +13,16 @@ namespace XO
     public partial class Form1 : Form
     {
         Properties.Settings settings = new Properties.Settings();
-        TableLayoutPanel tlp;
+
         Color tableColor = new Color();
+
         bool symbolX = true;
+
+        int UiLevel;
+
+        int gameLevel = 0;
+
+        bool PlayerTurn = false;
 
         List<UC_Board_Squad> boards = new List<UC_Board_Squad>();
 
@@ -24,6 +31,8 @@ namespace XO
             InitializeComponent();
             tableColor = settings._boardColor;
             GetUserControls();
+            setColors();
+            Get_Level();
         }
         private void GetUserControls()
         {
@@ -74,13 +83,29 @@ namespace XO
         }
         private void setColors()
         {
+            
             btn_boardColor.BackColor = tableColor;
+            if(btn_boardColor.BackColor == Color.Black)
+            {
+                btn_boardColor.ForeColor = Color.White;
+            }
+            else
+            {
+                btn_boardColor.ForeColor = Color.Black;
+            }
         }
         private void btn_boardColor_Click(object sender, EventArgs e)
         {
             ChooseColor();
         }
 
-       
+       private void Set_Level()
+        {
+
+        }
+        private void Get_Level()
+        {
+            UiLevel = settings._level;
+        }
     }
 }
