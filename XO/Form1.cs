@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using XO.GameLogic;
 
 namespace XO
 {
@@ -14,17 +15,19 @@ namespace XO
     {
         Properties.Settings settings = new Properties.Settings();
 
+        AITurn aiTurn = new AITurn();
+
         Color tableColor = new Color();
 
         bool symbolX = true;
 
         int AILevel;
 
-        int gameLevel = 0;
+        int gameLevel = 1;
 
         bool playerTurn = false;
 
-        List<UC_Board_Squad> boards = new List<UC_Board_Squad>();
+        protected List<UC_Board_Squad> boards = new List<UC_Board_Squad>();
         public Form1()
         {
             InitializeComponent();
@@ -32,7 +35,34 @@ namespace XO
             GetUserControls();
             setColors();
             Get_AI_Level();
+            SelectWhoStart();
+            StartGame();
         }
+
+        private void StartGame()
+        {
+            if (!playerTurn)
+            {
+
+            }
+        }
+
+        private void SelectWhoStart()
+        {
+            if(gameLevel == 1)
+            {
+                cmb_start.SelectedIndex = 0;
+            }
+            if(cmb_start.SelectedIndex == 0)
+            {
+                playerTurn = true;
+            }
+            else
+            {
+                playerTurn=false;
+            }
+        }
+
         private void GetUserControls()
         {
             boards.Clear();
@@ -70,12 +100,14 @@ namespace XO
                 {
                     uc._ocupated = "AI";
                 }
+                playerTurn = !playerTurn;
                 uc._isEmpty = false;
             }
             else
             {
                 MessageBox.Show("უჯრა უკვე შევსებულია");
             }
+            aiTurn.CheckBoards(boards);
         }
         private string Get_Symbol()
         {

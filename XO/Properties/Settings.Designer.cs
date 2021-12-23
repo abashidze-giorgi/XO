@@ -46,5 +46,17 @@ namespace XO.Properties {
                 this["_level"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("მომხმარებელი")]
+        public string _WhoStart {
+            get {
+                return ((string)(this["_WhoStart"]));
+            }
+            set {
+                this["_WhoStart"] = value;
+            }
+        }
     }
 }
