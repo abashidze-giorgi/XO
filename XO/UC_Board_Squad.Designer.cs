@@ -47,7 +47,6 @@
             this.tlp.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tlp.Size = new System.Drawing.Size(150, 150);
             this.tlp.TabIndex = 0;
-            this.tlp.Click += new System.EventHandler(this.tableLayoutPanel1_Click);
             // 
             // lbl_text
             // 
@@ -59,7 +58,6 @@
             this.lbl_text.Size = new System.Drawing.Size(87, 120);
             this.lbl_text.TabIndex = 0;
             this.lbl_text.Text = "-";
-            this.lbl_text.Click += new System.EventHandler(this.lbl_text_Click);
             // 
             // UC_Board_Squad
             // 
@@ -67,7 +65,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.tlp);
             this.Name = "UC_Board_Squad";
-            this.Click += new System.EventHandler(this.UC_Board_Squad_Click);
             this.tlp.ResumeLayout(false);
             this.tlp.PerformLayout();
             this.ResumeLayout(false);

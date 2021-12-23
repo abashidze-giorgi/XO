@@ -37,7 +37,7 @@ namespace XO.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
         public int _level {
             get {
                 return ((int)(this["_level"]));

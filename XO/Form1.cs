@@ -18,11 +18,11 @@ namespace XO
 
         bool symbolX = true;
 
-        int UiLevel;
+        int AILevel;
 
         int gameLevel = 0;
 
-        bool PlayerTurn = false;
+        bool playerTurn = false;
 
         List<UC_Board_Squad> boards = new List<UC_Board_Squad>();
 
@@ -32,7 +32,7 @@ namespace XO
             tableColor = settings._boardColor;
             GetUserControls();
             setColors();
-            Get_Level();
+            Get_AI_Level();
         }
         private void GetUserControls()
         {
@@ -50,7 +50,9 @@ namespace XO
                     boardIndex++;
                     uc._text = "";
                     uc.Dock = DockStyle.Fill;
+                    //uc._isEmpty = true;
                     uc.tlp.Click += (s, e) => { Set_Text("", uc); };
+                    uc.lbl_text.Click += (s, e) => { Set_Text("", uc); };
                     boards.Add(uc);
                     tableLayoutPanel1.Controls.Add(uc, i, x);
                 }
@@ -58,7 +60,15 @@ namespace XO
         }
         private void Set_Text(string v, UC_Board_Squad uc)
         {
-            uc._text = Get_Symbol();
+            if (uc._isEmpty)
+            {
+                uc._text = Get_Symbol();
+                uc._isEmpty = false;
+            }
+            else
+            {
+                MessageBox.Show("უჯრა უკვე შევსებულია");
+            }
         }
         private string Get_Symbol()
         {
@@ -98,14 +108,27 @@ namespace XO
         {
             ChooseColor();
         }
-
-       private void Set_Level()
+        private void cmb_ai_lvl_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            Set_AI_Level();
+            Get_AI_Level();
         }
-        private void Get_Level()
+        private void Get_AI_Level()
         {
-            UiLevel = settings._level;
+            AILevel = settings._level;
+            cmb_ai_lvl.SelectedIndex = AILevel;
+        }
+        private void Set_AI_Level()
+        {
+            if (cmb_ai_lvl.SelectedIndex == 0)
+            {
+                settings._level = 0;
+            }
+            else
+            {
+                settings._level = 1;
+            }
+            settings.Save();
         }
     }
 }

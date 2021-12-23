@@ -15,17 +15,23 @@ namespace XO
         public UC_Board_Squad()
         {
             InitializeComponent();
+            SetEmpty();
         }
 
-        private void lbl_text_Click(object sender, EventArgs e)
+        private void SetEmpty()
         {
-
+            _isEmpty = true;
         }
 
-        private void tableLayoutPanel1_Click(object sender, EventArgs e)
+
+        private bool IsEmpty;
+
+        public bool _isEmpty
         {
-
+            get { return IsEmpty; }
+            set { IsEmpty = value; }
         }
+
 
         private string TEXT;
 
@@ -53,11 +59,6 @@ namespace XO
             {
                 lbl_text.ForeColor = Color.Black;
             }
-        }
-
-        private void UC_Board_Squad_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }
