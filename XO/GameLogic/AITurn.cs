@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using XO;
 
 namespace XO.GameLogic
 {
@@ -22,7 +23,29 @@ namespace XO.GameLogic
 
         List<Array> AIWarningLines = new List<Array>();
 
-        public void CheckBoards(List<UC_Board_Squad> list)
+        UC_Board_Squad AISelectboard;
+
+        private void AI_Turn()
+        {
+            if (Boards[4]._isEmpty)
+            {
+                Form1 form = new Form1();
+                AISelectboard = Boards[4];
+            }
+        }
+
+        private void CheckAIWarningLines()
+        {
+
+        }
+
+        private void CheckPlayerWarningLines()
+        {
+
+        }
+
+ 
+        public UC_Board_Squad Ai_Turn(List<UC_Board_Squad> list)
         {
             Boards = list;
             SetWinnerLines();
@@ -32,6 +55,8 @@ namespace XO.GameLogic
             }
             CheckWarningLines();
             AnalysResult();
+            AI_Turn();
+            return AISelectboard;
         }
 
         private void SetWinnerLines()

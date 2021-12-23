@@ -43,7 +43,7 @@ namespace XO
         {
             if (!playerTurn)
             {
-
+                aiTurn.Ai_Turn(boards);
             }
         }
 
@@ -80,16 +80,16 @@ namespace XO
                     boardIndex++;
                     uc._text = "";
                     uc.Dock = DockStyle.Fill;
-                    uc.tlp.Click += (s, e) => { Set_Text("", uc); };
-                    uc.lbl_text.Click += (s, e) => { Set_Text("", uc); };
+                    uc.tlp.Click += (s, e) => { Set_Text(uc); };
+                    uc.lbl_text.Click += (s, e) => { Set_Text(uc); };
                     boards.Add(uc);
                     tableLayoutPanel1.Controls.Add(uc, i, x);
                 }
             }
         }
-        private void Set_Text(string v, UC_Board_Squad uc)
+        public void Set_Text(UC_Board_Squad uc)
         {
-            if (uc._isEmpty)
+            if (uc != null && uc._isEmpty)
             {
                 uc._text = Get_Symbol();
                 if (playerTurn)
@@ -100,14 +100,14 @@ namespace XO
                 {
                     uc._ocupated = "AI";
                 }
-                playerTurn = !playerTurn;
                 uc._isEmpty = false;
+                ChangeTurn();
+                Do_AI_Turn();
             }
-            else
+            else if(uc != null)
             {
                 MessageBox.Show("უჯრა უკვე შევსებულია");
             }
-            aiTurn.CheckBoards(boards);
         }
         private string Get_Symbol()
         {
@@ -186,7 +186,11 @@ namespace XO
 
         private void Do_AI_Turn()
         {
-            
+            if (!playerTurn)
+            {
+                Set_Text(aiTurn.Ai_Turn(boards));
+                ChangeTurn();
+            }
         }
     }
 }
