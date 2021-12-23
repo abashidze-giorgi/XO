@@ -62,6 +62,14 @@ namespace XO
             if (uc._isEmpty)
             {
                 uc._text = Get_Symbol();
+                if (playerTurn)
+                {
+                    uc._ocupated = "player";
+                }
+                else
+                {
+                    uc._ocupated = "AI";
+                }
                 uc._isEmpty = false;
             }
             else
@@ -137,6 +145,16 @@ namespace XO
         {
             symbolX = true;
             GetUserControls();
+        }
+
+        private void ChangeTurn()
+        {
+            playerTurn = !playerTurn;
+        }
+
+        private void Do_AI_Turn()
+        {
+            
         }
     }
 }

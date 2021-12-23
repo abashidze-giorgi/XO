@@ -18,11 +18,19 @@ namespace XO
             SetEmpty();
         }
 
+        private string Ocupated;
+
+        public string _ocupated
+        {
+            get { return Ocupated; }
+            set { Ocupated = value; }
+        }
+
+
         private void SetEmpty()
         {
             _isEmpty = true;
         }
-
 
         private bool IsEmpty;
 
