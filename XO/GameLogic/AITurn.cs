@@ -9,7 +9,7 @@ namespace XO.GameLogic
 {
     internal class AITurn
     {
-        List<UC_Board_Squad> Boards = new List<UC_Board_Squad>();
+        List<UC_Board_Squad> Boards;
 
         List<UC_Board_Squad> playerBoards = new List<UC_Board_Squad>();
 
@@ -29,16 +29,26 @@ namespace XO.GameLogic
 
         private void AI_Turn()
         {
+            AISelectboardList.Clear();
             if (Boards[4]._isEmpty)
             {
-                Form1 form = new Form1();
-                AISelectboardList.Add(Boards[4]);
-                return;
+                if (AILevel != 2)
+                {
+                    Random rng = new Random();
+                    bool randomBool = rng.Next(0, 2) > 0;
+                    if (!randomBool)
+                    {
+                        AISelectboardList.Add(Boards[4]);
+                        return;
+                    }
+                }
+                else
+                {
+                    AISelectboardList.Add(Boards[4]);
+                    return;
+                }
             }
-            else
-            {
-                CheckAIWarningLines();
-            }
+            CheckAIWarningLines();
         }
 
         private void CheckAIWarningLines()
@@ -55,21 +65,28 @@ namespace XO.GameLogic
                         {
                             currentLineOccupiedBoard++;
                         }
-                        else if(Boards[boardIndex - 1]._ocupated != "player")
+                        else if(Boards[boardIndex - 1]._ocupated != "player" && Boards[boardIndex - 1]._isEmpty)
                         {
                             AISelectboardList.Add(Boards[boardIndex - 1]);
+                        }
+                        else if(Boards[boardIndex - 1]._isEmpty)
+                        {
+                            board = Boards[boardIndex - 1];
+                            AISelectboardList.Add(board);
                         }
                     }
                     if(currentLineOccupiedBoard > 2)
                     {
-                        AISelectboardList.Clear();
-                        AISelectboardList.Add(board);
-                        return;
+                        if (board._isEmpty)
+                        {
+                            AISelectboardList.Clear();
+                            AISelectboardList.Add(board);
+                            return;
+                        }
                     }
                 }
             }
             CheckPlayerWarningLines();
-
         }
 
         private void CheckPlayerWarningLines()
@@ -82,20 +99,6 @@ namespace XO.GameLogic
                 {
                     foreach (int boardIndex in winnerArray)
                     {
-                        if (Boards[boardIndex - 1]._ocupated == "player")
-                        {
-                            occupiedBoards++;
-                        }
-                        else
-                        {
-                            AISelectboardList.Add(Boards[boardIndex - 1]);
-                        }
-                    }
-                    if (occupiedBoards > 2)
-                    {
-                        AISelectboardList.Clear();
-                        AISelectboardList.Add(board);
-                        return;
                     }
                 }
             }
@@ -104,10 +107,10 @@ namespace XO.GameLogic
  
         public List<UC_Board_Squad> AI_Selected_Boards(List<UC_Board_Squad> list, int aiLevel)
         {
-            AILevel - aiLevel;
+            AILevel = aiLevel;
             Boards = list;
             SetWinnerLines();
-            foreach (UC_Board_Squad uc in list)
+            foreach (UC_Board_Squad uc in Boards)
             {
                 Check_Player_Turns(uc);
             }
@@ -121,12 +124,12 @@ namespace XO.GameLogic
         {
             if(winnerLines.Count == 0)
             {
-                int[] array1 = new int[] { 1, 2, 3 };
-                int[] array2 = new int[] { 4, 5, 6 };
-                int[] array3 = new int[] { 7, 8, 9 };
-                int[] array4 = new int[] { 1, 4, 7 };
-                int[] array5 = new int[] { 2, 5, 8 };
-                int[] array6 = new int[] { 3, 6, 9 };
+                int[] array1 = new int[] { 1, 4, 7 };
+                int[] array2 = new int[] { 2, 5, 8 };
+                int[] array3 = new int[] { 3, 6, 9 };
+                int[] array4 = new int[] { 1, 2, 3 };
+                int[] array5 = new int[] { 4, 5, 6 };
+                int[] array6 = new int[] { 7, 8, 9 };
                 int[] array7 = new int[] { 1, 5, 9 };
                 int[] array8 = new int[] { 3, 5, 7 };
                 winnerLines.Add(array1);

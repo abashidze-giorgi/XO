@@ -25,17 +25,17 @@ namespace XO
 
         int gameLevel = 1;
 
-        bool playerTurn = false;
+        bool playerTurn = true;
 
         protected List<UC_Board_Squad> boards = new List<UC_Board_Squad>();
         public Form1()
         {
             InitializeComponent();
+            cmb_start.SelectedIndex = 0;
             tableColor = settings._boardColor;
             GetUserControls();
             setColors();
             Get_AI_Level();
-            SelectWhoStart();
             StartGame();
         }
 
@@ -49,11 +49,6 @@ namespace XO
 
         private void SelectWhoStart()
         {
-            if(gameLevel == 1)
-            {
-                cmb_start.SelectedIndex = 0;
-            }
-
             if(cmb_start.SelectedIndex == 0)
             {
                 playerTurn = true;
@@ -61,6 +56,7 @@ namespace XO
             else
             {
                 playerTurn=false;
+                Do_AI_Turn();
             }
         }
 
@@ -96,14 +92,18 @@ namespace XO
                 if (playerTurn)
                 {
                     uc._ocupated = "player";
+                    ChangeTurn();
                 }
                 else
                 {
                     uc._ocupated = "AI";
+                    ChangeTurn();
                 }
                 uc._isEmpty = false;
-                ChangeTurn();
-                Do_AI_Turn();
+                if (!playerTurn)
+                {
+                    Do_AI_Turn();
+                }
             }
             else if(uc != null)
             {
@@ -164,15 +164,20 @@ namespace XO
             {
                 settings._level = 0;
             }
-            else
+            else if(cmb_ai_lvl.SelectedIndex == 1)
             {
                 settings._level = 1;
+            }
+            else
+            {
+                settings._level = 2;
             }
             settings.Save();
         }
         private void btn_restart_Click(object sender, EventArgs e)
         {
             Restart();
+            SelectWhoStart();
         }
         private void Restart()
         {
@@ -187,13 +192,38 @@ namespace XO
         {
             if (!playerTurn)
             {
-                List<UC_Board_Squad> list = aiTurn.AI_Selected_Boards(boards);
-                if (list.Count < 2)
+                List<UC_Board_Squad> list = aiTurn.AI_Selected_Boards(boards, AILevel);
+                if (list.Count == 1)
                 {
                     Set_Text(list[0]);
                 }
-                ChangeTurn();
+                else if(list.Count >1)
+                {
+                    int maxCount = list.Count;
+                    Random rng = new Random();
+                    Set_Text(list[rng.Next(0, maxCount)]);
+                }
+                else
+                {
+                    return1:
+                    Random rng = new Random();
+                    int selectedIndex = rng.Next(0, 9);
+                    if (boards[selectedIndex]._isEmpty)
+                    {
+                        Set_Text(boards[selectedIndex]);
+                    }
+                    else
+                    {
+                        goto return1;
+                    }
+                }
             }
+        }
+
+        private void cmb_start_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Restart();
+            SelectWhoStart();
         }
     }
 }

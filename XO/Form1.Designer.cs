@@ -80,6 +80,7 @@
             this.cmb_ai_lvl.FormattingEnabled = true;
             this.cmb_ai_lvl.Items.AddRange(new object[] {
             "მარტივი",
+            "საშუალო",
             "რთული"});
             this.cmb_ai_lvl.Location = new System.Drawing.Point(116, 12);
             this.cmb_ai_lvl.Name = "cmb_ai_lvl";
@@ -116,6 +117,7 @@
             this.cmb_start.Name = "cmb_start";
             this.cmb_start.Size = new System.Drawing.Size(187, 21);
             this.cmb_start.TabIndex = 5;
+            this.cmb_start.SelectedIndexChanged += new System.EventHandler(this.cmb_start_SelectedIndexChanged);
             // 
             // label2
             // 
