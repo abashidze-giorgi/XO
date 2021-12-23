@@ -25,7 +25,6 @@ namespace XO
         bool playerTurn = false;
 
         List<UC_Board_Squad> boards = new List<UC_Board_Squad>();
-
         public Form1()
         {
             InitializeComponent();
@@ -36,6 +35,7 @@ namespace XO
         }
         private void GetUserControls()
         {
+            boards.Clear();
             tableLayoutPanel1.Controls.Clear();
             int a = tableLayoutPanel1.RowCount;
             int b = tableLayoutPanel1.ColumnCount;
@@ -50,7 +50,6 @@ namespace XO
                     boardIndex++;
                     uc._text = "";
                     uc.Dock = DockStyle.Fill;
-                    //uc._isEmpty = true;
                     uc.tlp.Click += (s, e) => { Set_Text("", uc); };
                     uc.lbl_text.Click += (s, e) => { Set_Text("", uc); };
                     boards.Add(uc);
@@ -129,6 +128,15 @@ namespace XO
                 settings._level = 1;
             }
             settings.Save();
+        }
+        private void btn_restart_Click(object sender, EventArgs e)
+        {
+            Restart();
+        }
+        private void Restart()
+        {
+            symbolX = true;
+            GetUserControls();
         }
     }
 }
